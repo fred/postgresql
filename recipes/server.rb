@@ -24,7 +24,8 @@
 include_recipe "postgresql::client"
 
 # randomly generate postgres password, unless using solo - see README
-if Chef::Config[:solo]
+# in Opsworks, Chef::Config[:solo] is not correct somehow
+if (node['opsworks'] || Chef::Config[:solo])
   missing_attrs = %w{
     postgres
   }.select do |attr|
